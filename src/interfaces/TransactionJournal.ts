@@ -1,0 +1,46 @@
+import { IAttachment } from "./Attachment";
+import { IBill } from "./Bill";
+import { ILocation } from "./Location";
+import { INote } from "./Note";
+import { ITransactionCurrency } from "./TransactionCurrency";
+import { IUser } from "./User";
+
+export interface ITransactionJournal {
+  id: number;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+  user_id: number;
+  transaction_type_id: number;
+  transaction_group_id?: number;
+  bill_id?: number;
+  transaction_currency_id?: number;
+  description: string;
+  date: Date;
+  interest_date?: Date;
+  book_date?: Date;
+  process_date?: Date;
+  order: number;
+  tag_count: number;
+  transaction_type_type: string;
+  encrypted: boolean;
+  completed: boolean;
+  attachments: IAttachment[];
+  bill?: IBill;
+  budgets: IBudget[];
+  categories: ICategory[];
+  destJournalLinks: ITransactionJournalLink[];
+  notes: INote[];
+  piggyBankEvents: IPiggyBankEvent[];
+  sourceJournalLinks: ITransactionJournalLink[];
+  tags: ITag[];
+  transactionCurrency?: ITransactionCurrency;
+  transactionGroup?: ITransactionGroup;
+  transactionJournalMeta: ITransactionJournalMeta[];
+  transactionType: ITransactionType;
+  transactions: ITransaction[];
+  user: IUser;
+  locations: ILocation[];
+  the_count: number;
+  uesr_group_id?: number;
+}

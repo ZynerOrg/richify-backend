@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 Int           @id @default(autoincrement())
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  deleted_at         DateTime?
+  userId             Int
+  user               User          @relation(fields: [userId], references: [id])
+  accountTypeId      Int
+  name               String
+  virtualBalance     String?
+  iban               String?
+  active             Boolean
+  encrypted          Boolean
+  order              Int
+  accountMeta        AccountMeta[]
+  accountType        AccountType   @relation(fields: [accountTypeId], references: [id])
+  attachments        Attachment[]
+  accountNumber      String
+  locations          Location[]
+  notes              Note[]
+  objectGroups       ObjectGroup[]
+  piggyBanks         PiggyBank[]
+  transactions       Transaction[]
+  lastActivityDate   DateTime
+  startBalance       String
+  endBalance         String
+  difference         String
+  interest           String
+  interestPeriod     String
+  accountTypeString  String
+  location           String
+  liabilityDirection String
+  currentDebt        String
+  userGroupId        Int
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deleted_at DateTime?
+  Account    Account[]
+}
+
+model AccountMeta {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model AccountType {
+  id      Int       @id @default(autoincrement())
+  Account Account[]
+}
+
+model Attachment {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model ObjectGroup {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model PiggyBank {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId Int?
+}
